@@ -53,7 +53,7 @@ class TimeSeriesHierarchicalClustering:
         return linkage_matrix
 
 
-    def fit(self, distance_matrix: np.ndarray) -> Self:
+    def fit(self, distance_matrix: np.ndarray):
         """
         Fit the agglomerative clustering model based on distance matrix
 
@@ -66,7 +66,17 @@ class TimeSeriesHierarchicalClustering:
         self: the fitted model
         """
 
-       # INSERT YOUR CODE
+         self.model = AgglomerativeClustering(
+            n_clusters=self.n_clusters,
+            metric='precomputed',
+            linkage=self.method,
+            compute_distances=True
+        )
+
+        self.model.fit(distance_matrix)
+
+        self.labels_ = self.model.labels_
+        self.linkage_matrix = self._create_linkage_matrix()
 
         return self
 
